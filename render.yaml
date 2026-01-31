@@ -1,13 +1,21 @@
-services: 
-  - type: web 
-    name: daily-reflections 
-    env: python 
-    buildCommand: "./build.sh" 
-    startCommand: "gunicorn wsgi:application" 
-    envVars: 
-      - key: PYTHON_VERSION 
-        value: 3.11.11 
-      - key: SECRET_KEY 
-        generateValue: true 
-      - key: FLASK_ENV 
-        value: production 
+services:
+  # Python Backend
+  - type: web
+    name: mental-health-app
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      cd frontend && npm install && npm run build && cd ..
+    startCommand: gunicorn "app:create_app()"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mental-health-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+
+databases:
+  - name: mental-health-db
+    databaseName: mental_health
+    user: mental_health_user
