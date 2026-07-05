@@ -1,6 +1,7 @@
 <script>
   export let page = "home";
   export let user = null;
+  export let onLogout = () => {};
 
   function navigate(page) {
     window.location.hash = page;
@@ -28,10 +29,9 @@
             class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
             on:click={() => navigate("reflect")}>New Reflection</button
           >
-          <a
-            href="/auth/logout"
+          <button
             class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:text-red-800"
-            >Logout</a
+            on:click={onLogout}>Logout</button
           >
         {:else}
           <button

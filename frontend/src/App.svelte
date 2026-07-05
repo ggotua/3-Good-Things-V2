@@ -14,6 +14,16 @@
   // Basic user check (to be replaced with API)
   let loading = true;
 
+  async function handleLogout() {
+    try {
+      await fetch("/api/logout");
+    } catch (e) {
+      console.error(e);
+    }
+    user = null;
+    window.location.hash = "home";
+  }
+
   function handleHashChange() {
     const hash = window.location.hash.slice(1);
     page = hash || "home";
@@ -44,7 +54,7 @@
 </script>
 
 <div class="min-h-screen bg-gray-50">
-  <Navbar {user} {page} />
+  <Navbar {user} {page} onLogout={handleLogout} />
 
   <main class="py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
